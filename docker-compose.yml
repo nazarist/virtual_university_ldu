@@ -1,80 +1,78 @@
 version: '3.3'
 
 networks:
-   back:
-   front:
+  back:
+  front:
 
 
 services:
-   nginx:
-      build:
-         context: .
-         dockerfile: _docker/nginx/Dockerfile
-      container_name: ${APP_NAME}_nginx
-      volumes:
-         - ./backend/:/var/www/backend/
-         - ./client/:/app/
-      networks:
-         - back
-      ports:
-         -  80:8080
-      depends_on:
-         - php 
-         - mysql_db
+  nginx:
+     build:
+        context: .
+        dockerfile: _docker/nginx/Dockerfile
+     container_name: ${APP_NAME}_nginx
+     volumes:
+        - ./backend/:/var/www/backend/
+        - ./client/:/app/
+     networks:
+        - back
+     ports:
+        -  80:8080
+     depends_on:
+        - php
+        - mysql_db
 
-   php:
-      build:
-         context: .
-         dockerfile: _docker/php/Dockerfile
-      container_name: ${APP_NAME}_php
-      volumes:
-         - ./backend/:/var/www/backend/
-      networks:
-         - back
-      depends_on:
-         - mysql_db
+  php:
+     build:
+        context: .
+        dockerfile: _docker/php/Dockerfile
+     container_name: ${APP_NAME}_php
+     volumes:
+        - ./backend/:/var/www/backend/
+     networks:
+        - back
+     depends_on:
+        - mysql_db
 
-   node:
-      build:
-         context: .
-         dockerfile: _docker/node/Dockerfile
-      container_name: ${APP_NAME}_node
-      volumes:
-         - ./client/:/app/
-         - /app/node_modules
-      ports:
-         - 3000:3000
-      networks:
-         - front
+  node:
+     build:
+        context: .
+        dockerfile: _docker/node/Dockerfile
+     container_name: ${APP_NAME}_node
+     volumes:
+        - ./client/:/app/
+        - /app/node_modules
+     ports:
+        - 3000:3000
+     networks:
+        - front
 
-   mysql_db:
-      build:
-         context: .
-         dockerfile: _docker/mysql/Dockerfile
-      container_name: ${APP_NAME}_mysql
-      restart: always
-      volumes:
-         - ./tmp/mysql/:/var/lib/mysql
-      ports:
-         - 3306:3306
-      command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci' ]
-      environment:
-         MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      networks:
-         - back
+  mysql_db:
+     build:
+        context: .
+        dockerfile: _docker/mysql/Dockerfile
+     container_name: ${APP_NAME}_mysql
+     restart: always
+     volumes:
+        - ./tmp/mysql/:/var/lib/mysql
+     ports:
+        - 3306:3306
+     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci' ]
+     environment:
+        MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+     networks:
+        - back
 
-   phpmyadmin:
-      image: phpmyadmin
-      container_name: ${APP_NAME}_pma
-      environment:
-         PMA_HOST: mysql_db
-         PMA_PORT: 3306
-      restart: unless-stopped
-      ports:
-         - 8080:80 
-      networks:
-         - back
-      depends_on:
-         - mysql_db
-
-
+  phpmyadmin:
+     image: phpmyadmin
+     container_name: ${APP_NAME}_pma
+     environment:
+        PMA_HOST: mysql_db
+        PMA_PORT: 3306
+     restart: unless-stopped
+     ports:
+        - 8080:80
+     networks:
+        - back
+     depends_on:
+        - mysql_db

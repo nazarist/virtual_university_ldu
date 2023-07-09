@@ -31,4 +31,6 @@ RUN composer update --prefer-dist --no-dev --optimize-autoloader --no-interactio
 
 WORKDIR /var/www/backend
 
-CMD cp -r /build_dir/vendor/ /var/www/backend/ && php-fpm
+CMD cp -r /build_dir/vendor/ /var/www/backend/ \
+    && cp -n /var/www/backend/.env.example /var/www/backend/.env \
+    && php-fpm
