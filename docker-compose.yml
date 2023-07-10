@@ -2,7 +2,9 @@ version: '3.3'
 
 networks:
   back:
+     driver: bridge
   front:
+     driver: bridge
 
 
 services:
