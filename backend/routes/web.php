@@ -1,18 +1,19 @@
 <?php
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function (){
+    dd(2);
 });
+
+Route::get('/http', function (){
+
+    $response = Http::post('http://virt.ldubgd.edu.ua/login/index.php', [
+        'username' => 'nazar',
+        'password' => 'password'
+    ])->status();
+
+    return $response;
+});
+

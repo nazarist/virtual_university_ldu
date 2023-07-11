@@ -16,6 +16,7 @@ services:
      volumes:
         - ./backend/:/var/www/backend/
         - ./client/:/app/
+        - ./_docker/nginx/conf.d/:/etc/nginx/conf.d/
      networks:
         - back
      ports:
