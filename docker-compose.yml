@@ -14,7 +14,7 @@ services:
         dockerfile: _docker/nginx/Dockerfile
      container_name: ${APP_NAME}_nginx
      volumes:
-        - ./backend/:/var/www/backend/
+        - ./backend/:/var/www/
         - ./client/:/app/
         - ./_docker/nginx/conf.d/:/etc/nginx/conf.d/
      networks:
@@ -31,12 +31,12 @@ services:
         dockerfile: _docker/php/Dockerfile
      container_name: ${APP_NAME}_php
      volumes:
-        - ./backend/:/var/www/backend/
+        - ./backend/:/var/www/
+        - /var/www/vendor
      networks:
         - back
      depends_on:
         - mysql_db
-     entrypoint: php
 
   node:
      build:
@@ -70,7 +70,7 @@ services:
   phpmyadmin:
      image: phpmyadmin
      container_name: ${APP_NAME}_pma
-     environment:
+     environment: 
         PMA_HOST: mysql_db
         PMA_PORT: 3306
      restart: unless-stopped

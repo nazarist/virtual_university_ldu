@@ -18,19 +18,10 @@ COPY ./_docker/php/php.ini /usr/local/etc/php/conf.d/php.ini
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-COPY  ./_docker/php/command.sh /command.sh
-
-RUN chmod +x /command.sh \
-    && mkdir /var/www/backend/
-
-WORKDIR /build_dir
+WORKDIR /var/www/
 
 COPY ./backend/ .
 
-RUN composer update --prefer-dist --no-dev --optimize-autoloader --no-interaction
+RUN composer install --prefer-dist --optimize-autoloader
 
-WORKDIR /var/www/backend
-
-CMD cp -r /build_dir/vendor/ /var/www/backend/ \
-    && cp -n /var/www/backend/.env.example /var/www/backend/.env \
-    && php-fpm
+CMD cp -n .env.example .env && php-fpm
