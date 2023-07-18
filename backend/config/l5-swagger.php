@@ -12,7 +12,7 @@ return [
                 /*
                  * Route for accessing api documentation interface
                 */
-                'api' => 'api/documentations',
+                'api' => 'api/documentation',
             ],
             'paths' => [
                 /*
@@ -294,7 +294,7 @@ return [
          * Constants which can be used in annotations
          */
         'constants' => [
-            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://localhost'),
+            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
         ],
     ],
 ];

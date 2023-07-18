@@ -23,7 +23,7 @@ class AuthController extends Controller
     {
         $credentials = $request->validated();
 
-        return $this->isAuthorized($credentials, $request->boolean('remember'));
+        return $this->isAuthorized($credentials);
     }
 
 

@@ -13,6 +13,6 @@ Route::prefix('auth')->group(function (){
 
 
 Route::get('', function(){
-    return User::all();
+    return [];
 });
 
