@@ -20,7 +20,7 @@ services:
      networks:
         - back
      ports:
-        -  80:80
+        -  80:8080
      depends_on:
         - php
         - mysql_db
@@ -67,16 +67,16 @@ services:
      networks:
         - back
 
-  # phpmyadmin:
-  #    image: phpmyadmin
-  #    container_name: ${APP_NAME}_pma
-  #    environment: 
-  #       PMA_HOST: mysql_db
-  #       PMA_PORT: 3306
-  #    restart: unless-stopped
-  #    ports:
-  #       - 8080:80
-  #    networks:
-  #       - back
-  #    depends_on:
-  #       - mysql_db
+  phpmyadmin:
+     image:  phpmyadmin
+     container_name: ${APP_NAME}_pma
+     environment:
+        PMA_HOST: mysql_db
+        PMA_PORT: 3306
+     restart: unless-stopped
+     ports:
+        - 8080:80
+     networks:
+        - back
+     depends_on:
+        - mysql_db

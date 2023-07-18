@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Faculty;
+use Database\Factories\GroupFactory;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 
@@ -11,8 +13,4 @@ Route::prefix('auth')->group(function (){
     Route::post('refresh', [App\Http\Controllers\Auth\AuthController::class, 'refresh']);
 });
 
-
-Route::get('', function(){
-    return [];
-});
 

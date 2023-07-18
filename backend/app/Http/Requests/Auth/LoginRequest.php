@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class LoginRequest extends FormRequest
 {
@@ -22,7 +24,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['string', 'required'],
+            'email' => ['string', 'required', 'email', 'exists:'.User::class],
             'password' => ['string', 'required'],
         ];
     }

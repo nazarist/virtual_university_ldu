@@ -5,10 +5,18 @@ namespace App\Swagger;
 /**
  * @OA\Info(
  *     version="1.0",
- *     title="Example for response examples value"
+ *     title="Documentation for LDU Parser API"
  * ),
  *
- * @OA\PathItem(path="/api")
+ * @OA\PathItem(path="/api"),
+ *
+ * @OA\Components(
+ *      @OA\SecurityScheme(
+ *          securityScheme="bearerAuth",
+ *          type="http",
+ *          scheme="bearer"
+ *      )
+ * )
  */
 class MainSwagger
 {

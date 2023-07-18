@@ -1,68 +1,273 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Example for response examples value",
+        "title": "Documentation for LDU Parser API",
         "version": "1.0"
     },
     "paths": {
         "/api": {},
-        "/users": {
+        "/api/auth/register": {
             "post": {
-                "summary": "Adds a new user - with oneOf examples",
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register a new user",
                 "requestBody": {
+                    "description": "User credentials",
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "id": {
-                                        "type": "string"
-                                    },
                                     "name": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "example": "nazar"
                                     },
-                                    "phone": {
-                                        "oneOf": [
-                                            {
-                                                "type": "string"
-                                            },
-                                            {
-                                                "type": "integer"
-                                            }
-                                        ]
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "nazar@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password"
                                     }
                                 },
-                                "type": "object",
-                                "example": {
-                                    "id": "a3fb6",
-                                    "name": "Jessica Smith",
-                                    "phone": 12345678
-                                }
+                                "type": "object"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Successful registration",
                         "content": {
                             "application/json": {
-                                "schema": {},
-                                "examples": {
-                                    "result": {
-                                        "summary": "An result object.",
-                                        "value": {
-                                            "success": true
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": 604800
                                         }
                                     },
-                                    "bool": {
-                                        "summary": "A boolean value.",
-                                        "value": false
-                                    }
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
                     }
                 }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login user",
+                "requestBody": {
+                    "description": "User credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "nazar@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful registration",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": 604800
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout user",
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged out",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully logged out"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/refresh": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Refresh access token",
+                "responses": {
+                    "200": {
+                        "description": "Token refreshed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": 604800
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
             }
         }
     }
