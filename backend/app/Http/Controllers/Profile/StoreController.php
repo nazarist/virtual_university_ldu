@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Profile\CreateUserDataRequest;
-use http\Client\Curl\User;
-use Illuminate\Http\Request;
+use App\Http\Requests\Profile\UserProfileDataRequest;
+
 
 class StoreController extends Controller
 {
-    public function createUserData(CreateUserDataRequest $request)
+    public function createProfileData(UserProfileDataRequest $request)
     {
         $formData = $request->validated();
-        return auth()->user();
+
     }
 }

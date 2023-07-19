@@ -12,7 +12,7 @@ Route::prefix('/auth')->group(function (){
 
 
 Route::prefix('/profile')->middleware('auth')->group(function (){
-    Route::post('create', [App\Http\Controllers\Profile\StoreController::class, 'createUserData']);
+    Route::post('create', [App\Http\Controllers\Profile\StoreController::class, 'createProfileData'])->name('profile.create');
 
 });
 

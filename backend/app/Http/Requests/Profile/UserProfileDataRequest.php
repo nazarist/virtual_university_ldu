@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests\Profile;
 
-use App\Models\Faculty\Faculty;
-use App\Models\Group\Group;
+use App\Models\Faculty;
+use App\Models\Group;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateUserDataRequest extends FormRequest
+class UserProfileDataRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

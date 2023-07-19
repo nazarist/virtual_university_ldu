@@ -2,7 +2,7 @@
 
 namespace Tests\Trait\User;
 
-use App\Models\User\User;
+use App\Models\User;
 
 trait CreateUserTrait
 {

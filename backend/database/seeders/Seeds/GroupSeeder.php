@@ -2,7 +2,7 @@
 
 namespace Database\Seeders\Seeds;
 
-use App\Models\Group\Group;
+use App\Models\Group;
 use Database\Factories\GroupFactory;
 use Illuminate\Database\Seeder;
 

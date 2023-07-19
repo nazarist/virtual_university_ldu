@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Group;
+namespace App\Models;
 
 use Database\Factories\GroupFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,8 +10,4 @@ class Group extends Model
 {
     use HasFactory;
 
-    protected static function newFactory(): GroupFactory
-    {
-        return GroupFactory::new();
-    }
 }

@@ -1,11 +1,8 @@
 <?php
 
-namespace App\Models\User;
+namespace App\Models;
 
-use App\Models\UserData\UserData;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -15,11 +12,6 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
-
-    protected static function newFactory(): UserFactory
-    {
-        return UserFactory::new();
-    }
 
     protected $fillable = [
         'name',
@@ -51,10 +43,4 @@ class User extends Authenticatable implements JWTSubject
     {
         $this->attributes['password'] = Hash::make($password);
     }
-
-    public function userData(): HasOne
-    {
-        return $this->hasOne(UserData::class);
-    }
-
 }

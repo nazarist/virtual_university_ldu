@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\Faculty\Faculty;
+use App\Models\Faculty;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Group\Group>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Group>
  */
 class GroupFactory extends Factory
 {
