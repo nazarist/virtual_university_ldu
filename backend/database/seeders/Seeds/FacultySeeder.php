@@ -2,10 +2,7 @@
 
 namespace Database\Seeders\Seeds;
 
-use App\Models\Faculty;
-use App\Models\Group;
-use Database\Factories\GroupFactory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Faculty\Faculty;
 use Illuminate\Database\Seeder;
 
 class FacultySeeder extends Seeder

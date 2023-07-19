@@ -2,9 +2,8 @@
 
 namespace Database\Seeders\Seeds;
 
-use App\Models\Group;
+use App\Models\Group\Group;
 use Database\Factories\GroupFactory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class GroupSeeder extends Seeder

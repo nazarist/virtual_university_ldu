@@ -2,9 +2,8 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Models\User;
+use App\Models\User\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
 class LoginRequest extends FormRequest
 {

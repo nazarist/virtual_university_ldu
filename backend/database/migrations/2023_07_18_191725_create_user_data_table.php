@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Faculty\Faculty;
+use App\Models\User\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,10 +13,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('user_data', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignIdFor(User::class, 'user_id')->unique();
+            $table->string('ldu_login')->unique();
+            $table->string('ldu_password');
             $table->foreignIdFor(Faculty::class, 'faculty_id');
+            $table->foreignIdFor(Faculty::class, 'group_id');
+            $table->enum('course', [1,2,3,4,5])->default(1);
             $table->timestamps();
         });
     }
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('user_data');
     }
 };

@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
-use App\Models\User;
+use App\Models\User\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
 
@@ -37,7 +35,7 @@ class AuthController extends Controller
         return $this->isAuthorized($credentials);
     }
 
-    public function logout()
+    public function logout(): JsonResponse
     {
         auth()->logout();
 
@@ -45,7 +43,7 @@ class AuthController extends Controller
     }
 
 
-    public function refresh()
+    public function refresh(): JsonResponse
     {
         return $this->respondWithToken(auth()->refresh());
     }
