@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class, 'user_id')->unique();
-            $table->string('ldu_login')->unique();
+            $table->string('ldu_login');
             $table->string('ldu_password');
             $table->foreignIdFor(Faculty::class, 'faculty_id');
-            $table->foreignIdFor(Faculty::class, 'group_id');
+            $table->string('group');
             $table->enum('course', [1,2,3,4,5])->default(1);
             $table->timestamps();
         });

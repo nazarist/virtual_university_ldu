@@ -12,7 +12,11 @@ Route::prefix('/auth')->group(function (){
 
 
 Route::prefix('/profile')->middleware('auth')->group(function (){
-    Route::post('create', [App\Http\Controllers\Profile\StoreController::class, 'createProfileData'])->name('profile.create');
-
+    Route::post('create', [App\Http\Controllers\Profile\ProfileController::class, 'store'])->name('profile.create');
+    Route::get('{profile}', [App\Http\Controllers\Profile\ProfileController::class, 'show'])->name('profile.show');
 });
 
+
+Route::prefix('/user')->middleware('auth')->group(function (){
+    Route::get('self', [App\Http\Controllers\User\UserController::class, 'getSelf'])->name('user.self');
+});

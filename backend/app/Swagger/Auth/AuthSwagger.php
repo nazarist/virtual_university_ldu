@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
  * @OA\Post(
  *     path="/api/auth/register",
  *     summary="Register a new user",
- *     tags={"Authentication"},
+ *     tags={"Authentification"},
  *     @OA\RequestBody(
  *         required=true,
  *         description="User credentials",
@@ -43,7 +43,7 @@ use App\Http\Controllers\Controller;
  * @OA\Post(
  *     path="/api/auth/login",
  *     summary="Login user",
- *     tags={"Authentication"},
+ *     tags={"Authentification"},
  *     @OA\RequestBody(
  *         required=true,
  *         description="User credentials",
@@ -80,7 +80,7 @@ use App\Http\Controllers\Controller;
  * @OA\Post(
  *     path="/api/auth/logout",
  *     summary="Logout user",
- *     tags={"Authentication"},
+ *     tags={"Authentification"},
  *     security={{ "bearerAuth":{} }},
  *     @OA\Response(
  *         response=200,
@@ -105,7 +105,7 @@ use App\Http\Controllers\Controller;
  * @OA\Post(
  *     path="/api/auth/refresh",
  *     summary="Refresh access token",
- *     tags={"Authentication"},
+ *     tags={"Authentification"},
  *     security={{ "bearerAuth":{} }},
  *     @OA\Response(
  *         response=200,
