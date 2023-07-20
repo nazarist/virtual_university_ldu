@@ -9,7 +9,7 @@
         "/api/auth/register": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "Authentification"
                 ],
                 "summary": "Register a new user",
                 "requestBody": {
@@ -88,7 +88,7 @@
         "/api/auth/login": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "Authentification"
                 ],
                 "summary": "Login user",
                 "requestBody": {
@@ -163,7 +163,7 @@
         "/api/auth/logout": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "Authentification"
                 ],
                 "summary": "Logout user",
                 "responses": {
@@ -210,7 +210,7 @@
         "/api/auth/refresh": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "Authentification"
                 ],
                 "summary": "Refresh access token",
                 "responses": {
@@ -231,6 +231,289 @@
                                         "expires_in": {
                                             "type": "integer",
                                             "example": 604800
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/profile/create": {
+            "post": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Store a new user profile",
+                "requestBody": {
+                    "description": "User profile data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "ldu_login": {
+                                        "type": "string",
+                                        "example": "n.nazar"
+                                    },
+                                    "ldu_password": {
+                                        "type": "string",
+                                        "example": "232323"
+                                    },
+                                    "faculty_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "group": {
+                                        "type": "string",
+                                        "example": "КН12с"
+                                    },
+                                    "course": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful creation of user profile",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "ldu_login": {
+                                            "type": "string",
+                                            "example": "n.nazar"
+                                        },
+                                        "ldu_password": {
+                                            "type": "string",
+                                            "example": "232323"
+                                        },
+                                        "faculty": {
+                                            "type": "integer",
+                                            "example": "Ад`юнктура"
+                                        },
+                                        "group": {
+                                            "type": "string",
+                                            "example": "КН12с"
+                                        },
+                                        "course": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/profile/{id}": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Get user profile by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user profile",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of user profile",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "ldu_login": {
+                                            "type": "string",
+                                            "example": "n.nazar"
+                                        },
+                                        "ldu_password": {
+                                            "type": "string",
+                                            "example": "232323"
+                                        },
+                                        "faculty": {
+                                            "type": "string",
+                                            "example": "Ад`юнктура"
+                                        },
+                                        "group": {
+                                            "type": "string",
+                                            "example": "КН12с"
+                                        },
+                                        "course": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User profile not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User profile not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/self": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get authenticated self user",
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of authenticated user's profile",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "nazar"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "nazar@gmail.com"
+                                        },
+                                        "profile": {
+                                            "properties": {
+                                                "ldu_login": {
+                                                    "type": "string",
+                                                    "example": "n.nazar"
+                                                },
+                                                "ldu_password": {
+                                                    "type": "string",
+                                                    "example": "2323232"
+                                                },
+                                                "faculty": {
+                                                    "type": "string",
+                                                    "example": "Ад`юнктура"
+                                                },
+                                                "group": {
+                                                    "type": "string",
+                                                    "example": "КН12с"
+                                                },
+                                                "course": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": true
                                         }
                                     },
                                     "type": "object"

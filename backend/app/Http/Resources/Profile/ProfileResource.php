@@ -18,7 +18,7 @@ class ProfileResource extends JsonResource
         return [
             'ldu_login'    => $this->ldu_login,
             'ldu_password' => $this->ldu_password,
-            'faculty_id'   => Faculty::find($this->faculty_id)->name,
+            'faculty'   => $this->faculty->name,
             'group'        => $this->group,
             'course'       => $this->course,
         ];

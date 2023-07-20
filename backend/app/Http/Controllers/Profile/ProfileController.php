@@ -11,6 +11,11 @@ use Illuminate\Http\JsonResponse;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function store(UserProfileDataRequest $request): JsonResponse
     {
         $profile = UserProfile::create($request->validated());
