@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
+            $table->string('f_name')->nullable();
+            $table->string('l_name')->nullable();
+            $table->string('moodle_session')->nullable();
             $table->foreignIdFor(User::class, 'user_id')->unique();
             $table->string('ldu_login');
             $table->string('ldu_password');

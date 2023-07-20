@@ -18,7 +18,7 @@ class ProfileResource extends JsonResource
         return [
             'ldu_login'    => $this->ldu_login,
             'ldu_password' => $this->ldu_password,
-            'faculty'   => $this->faculty->name,
+            'faculty'      => $this->faculty->name,
             'group'        => $this->group,
             'course'       => $this->course,
         ];

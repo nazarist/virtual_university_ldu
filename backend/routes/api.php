@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Lesson\LessonController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,4 +20,9 @@ Route::prefix('/profile')->group(function (){
 
 Route::prefix('/user')->group(function (){
     Route::get('self', [App\Http\Controllers\User\UserController::class, 'getSelf'])->name('user.self');
+});
+
+
+Route::prefix('/lesson')->group(function (){
+    Route::get('/', [App\Http\Controllers\Lesson\LessonController::class, 'index'])->name('lesson.index');
 });

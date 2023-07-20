@@ -38,7 +38,7 @@ class UserProfileDataRequest extends FormRequest
     public function prepareForValidation(): void
     {
         $this->merge([
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->id()
         ]);
     }
 }

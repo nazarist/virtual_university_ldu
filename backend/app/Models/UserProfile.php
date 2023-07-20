@@ -11,6 +11,9 @@ class UserProfile extends Model
     use HasFactory;
 
     protected $fillable = [
+        'f_name',
+        'l_name',
+        'moodle_session',
         'ldu_login',
         'ldu_password',
         'faculty_id',
