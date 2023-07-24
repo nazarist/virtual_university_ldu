@@ -3,13 +3,16 @@
 namespace App\Parser;
 
 use App\Models\UserProfile;
+use DiDom\Document;
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class LduUniversity
 {
-    protected string $mainPage = 'http://virt.ldubgd.edu.ua/';
+    protected string $mainPageLink = 'http://virt.ldubgd.edu.ua/';
+
     protected string $domain = 'virt.ldubgd.edu.ua';
 
     protected UserProfile $profile;
@@ -20,7 +23,7 @@ class LduUniversity
     }
 
 
-    public function loginUser(): PromiseInterface|Response
+    public function loginUser(): static
     {
         $response = Http::asForm()
             ->contentType('application/x-www-form-urlencoded')
@@ -33,10 +36,26 @@ class LduUniversity
 
         $this->profile->update([
             'moodle_session' => $moodleSession->getValue(),
+            'session_at' => now()
         ]);
 
-        return $response;
+        return $this;
     }
+
+
+    public function loginInIfNotLoggedIn(): static
+    {
+        $diff = now()->diffInSeconds($this->profile->session_at);
+        if ($diff > 3600) {
+             $this->loginUser();
+        }
+        return $this;
+    }
+
+
+
+
+
 
     public function parsePage(string $link): PromiseInterface|Response
     {

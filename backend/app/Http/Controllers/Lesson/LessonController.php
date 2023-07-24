@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Lesson;
 
 use App\Http\Controllers\Controller;
 
+use App\Parser\LduScraper\MainPage;
 use App\Parser\LduUniversity;
 use DiDom\Document;
 use DiDom\Exceptions\InvalidSelectorException;
@@ -96,6 +97,16 @@ class LessonController extends Controller
 //
 //        dd($data);
 
+
+
+        $mainPage = new MainPage(auth()->user()->profile);
+
+        return $mainPage->parseCourses();
+
+
+
+
+        
 
 
 

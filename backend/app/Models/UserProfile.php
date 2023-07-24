@@ -14,6 +14,7 @@ class UserProfile extends Model
         'f_name',
         'l_name',
         'moodle_session',
+        'session_at',
         'ldu_login',
         'ldu_password',
         'faculty_id',
