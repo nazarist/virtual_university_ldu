@@ -10,6 +10,10 @@ class Course extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name', 'link_index', 'user_id'
+    ];
+
 
     public function lessons(): HasMany
     {

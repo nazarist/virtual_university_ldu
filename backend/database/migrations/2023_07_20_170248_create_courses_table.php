@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('link');
+            $table->integer('link_index');
             $table->foreignIdFor(User::class, 'user_id');
             $table->timestamps();
         });

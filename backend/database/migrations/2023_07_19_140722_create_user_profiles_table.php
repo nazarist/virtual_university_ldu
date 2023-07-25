@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('f_name')->nullable();
             $table->string('l_name')->nullable();
             $table->string('moodle_session')->nullable();
-            $table->timestamp('session_at');
+            $table->timestamp('session_at')->nullable();
             $table->foreignIdFor(User::class, 'user_id')->unique();
             $table->string('ldu_login');
             $table->string('ldu_password');

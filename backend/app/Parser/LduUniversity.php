@@ -9,9 +9,11 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
-class LduUniversity
+abstract class LduUniversity
 {
-    protected string $mainPageLink = 'http://virt.ldubgd.edu.ua/';
+    protected string $pageLink;
+
+    protected string $pageContent;
 
     protected string $domain = 'virt.ldubgd.edu.ua';
 
@@ -34,6 +36,7 @@ class LduUniversity
 
         $moodleSession = $response->cookies()->getCookieByName('MoodleSession');
 
+        dump($moodleSession->getValue());
         $this->profile->update([
             'moodle_session' => $moodleSession->getValue(),
             'session_at' => now()
@@ -46,15 +49,11 @@ class LduUniversity
     public function loginInIfNotLoggedIn(): static
     {
         $diff = now()->diffInSeconds($this->profile->session_at);
-        if ($diff > 3600) {
+        if ($diff > 7200) {
              $this->loginUser();
         }
         return $this;
     }
-
-
-
-
 
 
     public function parsePage(string $link): PromiseInterface|Response
@@ -62,5 +61,17 @@ class LduUniversity
         return Http::withCookies([
                 'MoodleSession' => $this->profile->moodle_session
             ], $this->domain)->get($link);
+    }
+
+
+    public function getPage(): string
+    {
+        return $this->pageContent;
+    }
+
+
+    protected function document(): Document
+    {
+        return new Document($this->pageContent);
     }
 }

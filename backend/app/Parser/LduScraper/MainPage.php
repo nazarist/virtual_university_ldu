@@ -8,10 +8,9 @@ use DiDom\Document;
 use Illuminate\Support\Facades\Storage;
 use App\Parser\Contracts\ParserContract;
 
-class MainPage extends LduUniversity implements ParserContract
+class MainPage extends LduUniversity 
 {
-    protected string $page;
-
+    protected string $pageLink = 'http://virt.ldubgd.edu.ua/';
 
     public function __construct(UserProfile $profile)
     {
@@ -19,21 +18,11 @@ class MainPage extends LduUniversity implements ParserContract
         $this->loginInIfNotLoggedIn();
 
         if (Storage::disk('local')->exists('main.html')){
-            $this->page = Storage::disk('local')->get('main.html');
+            $this->pageContent = Storage::disk('local')->get('main.html');
         }else{
-            $this->page = $this->parsePage($this->mainPageLink);
-            Storage::disk('local')->put('main.html', $this->page);
+            $this->pageContent = $this->parsePage($this->pageLink);
+            Storage::disk('local')->put('main.html', $this->pageContent);
         }
-    }
-
-    protected function document(): Document
-    {
-        return new Document($this->page);
-    }
-
-    public function getPage(): string
-    {
-        return $this->page;
     }
 
 
@@ -45,9 +34,10 @@ class MainPage extends LduUniversity implements ParserContract
         foreach ($courseboxs as $coursebox){
             $courseName = $coursebox->first('.coursename');
 
+            $linkIndex = explode('id=', $courseName->first('a')->attr('href'))[1];
             $data[] = [
                 'name' => $courseName->text(),
-                'link' => $courseName->first('a')->attr('href')
+                'link_index' => $linkIndex
             ];
         }
         
