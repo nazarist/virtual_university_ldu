@@ -16,10 +16,11 @@ class ProfileResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'first_name'   => $this->f_name,
+            'last_name'    => $this->l_name,
             'ldu_login'    => $this->ldu_login,
-            'ldu_password' => $this->ldu_password,
             'faculty'      => $this->faculty->name,
-            'group'        => $this->group,
+            'group'        => $this->group->name,
             'course'       => $this->course,
         ];
     }

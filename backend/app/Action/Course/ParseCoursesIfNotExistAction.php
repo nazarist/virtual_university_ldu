@@ -3,26 +3,34 @@
 namespace App\Action\Course;
 
 use App\Models\Course;
+use App\Models\Group;
 use App\Parser\LduScraper\MainPage;
+use Illuminate\Database\Eloquent\Collection;
 
 class ParseCoursesIfNotExistAction
 {
-    public function __invoke()
+    public function __invoke(): array|Collection
     {
-        $user = auth()->user();
+        $mainPage = new MainPage(auth()->user()->profile);
+        $mainPage->parseCourses();
+        
+        $profile = auth()->user()->profile;
 
-        if (!$user->courses()->exists()) {
-            $mainPage = new MainPage($user->profile);
+        $groupIsNotExists = Course::query()
+            ->where('group_id', $profile->group_id)
+            ->doesntExist();
+
+        if ($groupIsNotExists) {
+            $mainPage = new MainPage($profile);
 
             $data = [];
             foreach ($mainPage->parseCourses() as $course) {
-				   $data[] = Course::create(array_merge($course, ['user_id' => auth()->id()]));
-				}
-				return $data;
-        }else {
-        		return Course::query()->where('user_id', $user->id)->get();
+			   $data[] = Course::create($course);
+			}
+
+			return $data;
         }
 
-
-    }
+        return Course::query()->where('group_id', $profile->group_id)->get(); 
+    }   
 }

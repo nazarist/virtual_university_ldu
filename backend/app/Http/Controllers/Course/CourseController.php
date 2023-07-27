@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Course;
 
 use App\Action\Course\ParseCoursesIfNotExistAction;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Course\CourseResourse;
+use App\Parser\LduScraper\MainPage;
 
 class CourseController extends Controller
 {
@@ -16,8 +18,6 @@ class CourseController extends Controller
 
     public function index(ParseCoursesIfNotExistAction $action)
     {
-        return $action();
-
-
+        return CourseResourse::collection($action());
     }
 }

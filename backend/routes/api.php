@@ -24,10 +24,6 @@ Route::prefix('/user')->group(function (){
 
 
 Route::prefix('/courses')->group(function (){
-    Route::get('/', [App\Http\Controllers\Course\CourseController::class, 'index'])->name('lesson.index');
-});
-
-
-Route::prefix('/lesson')->group(function (){
-    Route::get('/', [App\Http\Controllers\Lesson\LessonController::class, 'index'])->name('lesson.index');
+    Route::get('/', [App\Http\Controllers\Course\CourseController::class, 'index'])->name('course.index');
+    Route::get('{course}/lessons', [App\Http\Controllers\Lesson\LessonController::class, 'index'])->name('course.lesson.index');
 });

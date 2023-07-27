@@ -11,7 +11,7 @@ class Course extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'link_index', 'user_id'
+        'name', 'link_index', 'group_id'
     ];
 
 

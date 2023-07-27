@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Lesson;
 
 use App\Http\Controllers\Controller;
 use App\Parser\LduScraper\CoursePage;
+use App\Models\Course;
 
 
 class LessonController extends Controller
@@ -13,10 +14,9 @@ class LessonController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Course $course)
     {
-        $courseParser = new CoursePage(auth()->user()->profile, 'http://virt.ldubgd.edu.ua/course/view.php?id=3076');
-
-        return $courseParser->getLesson();
+        $coursePage = new CoursePage(auth()->user()->profile, $course->link_index);
+        return $coursePage->getLesson();
     }
 }

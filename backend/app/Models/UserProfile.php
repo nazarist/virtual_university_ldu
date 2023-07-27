@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Faculty;
+use App\Models\Course;
+
 
 class UserProfile extends Model
 {
@@ -18,7 +21,7 @@ class UserProfile extends Model
         'ldu_login',
         'ldu_password',
         'faculty_id',
-        'group',
+        'group_id',
         'course',
         'user_id',
     ];
@@ -27,5 +30,11 @@ class UserProfile extends Model
     public function faculty(): BelongsTo
     {
         return $this->belongsTo(Faculty::class, 'faculty_id');
+    }
+
+
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Group::class, 'group_id');
     }
 }

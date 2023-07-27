@@ -8,6 +8,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use DiDom\Element;
 
 abstract class LduUniversity
 {
@@ -22,6 +23,7 @@ abstract class LduUniversity
     public function __construct(UserProfile $profile)
     {
         $this->profile = $profile;
+        $this->loginInIfNotLoggedIn();
     }
 
 
@@ -49,7 +51,8 @@ abstract class LduUniversity
     public function loginInIfNotLoggedIn(): static
     {
         $diff = now()->diffInSeconds($this->profile->session_at);
-        if ($diff > 7200) {
+
+        if ($diff > 14400 or $diff === 0) { // 4 hour or null(0)
              $this->loginUser();
         }
         return $this;
@@ -73,5 +76,14 @@ abstract class LduUniversity
     protected function document(): Document
     {
         return new Document($this->pageContent);
+    }
+
+
+    protected function getLinkIndex(Element $element)
+    {
+        $url = $element->first('a')->attr('href');
+        parse_str(parse_url($url, PHP_URL_QUERY), $params);
+
+        return $params['id'];
     }
 }

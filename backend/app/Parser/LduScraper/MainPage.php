@@ -8,6 +8,7 @@ use DiDom\Document;
 use Illuminate\Support\Facades\Storage;
 use App\Parser\Contracts\ParserContract;
 
+
 class MainPage extends LduUniversity 
 {
     protected string $pageLink = 'http://virt.ldubgd.edu.ua/';
@@ -15,8 +16,7 @@ class MainPage extends LduUniversity
     public function __construct(UserProfile $profile)
     {
         parent::__construct($profile);
-        $this->loginInIfNotLoggedIn();
-
+        
         if (Storage::disk('local')->exists('main.html')){
             $this->pageContent = Storage::disk('local')->get('main.html');
         }else{
@@ -32,12 +32,11 @@ class MainPage extends LduUniversity
 
         $data = [];
         foreach ($courseboxs as $coursebox){
-            $courseName = $coursebox->first('.coursename');
-
-            $linkIndex = explode('id=', $courseName->first('a')->attr('href'))[1];
             $data[] = [
-                'name' => $courseName->text(),
-                'link_index' => $linkIndex
+                'name' => $coursebox->first('.coursename')->text(),// get name
+                'link_index' => $this->getLinkIndex($courseboxs),
+                'user_id' => $this->profile->user_id,
+                'group_id' => $this->profile->group_id
             ];
         }
         
@@ -47,14 +46,13 @@ class MainPage extends LduUniversity
 
     public function parseProfileFullName(): array
     {
-
         $fullName = $this->document()->first('.fullname')->text();
 
         [$lName, $fName] = explode(' ', $fullName);
 
         return [
-            'lName' => $lName,
-            'fName' => $fName
+            'l_name' => $lName,
+            'f_name' => $fName
         ];
     }
 }

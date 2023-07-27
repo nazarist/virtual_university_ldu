@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Models\Group;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('link_index');
-            $table->foreignIdFor(User::class, 'user_id');
+            $table->foreignIdFor(Group::class, 'group_id');
             $table->timestamps();
         });
     }

@@ -29,7 +29,7 @@ class UserProfileDataRequest extends FormRequest
             'ldu_login'    => ['required', 'string'],
             'ldu_password' => ['required', 'string'],
             'faculty_id'   => ['required', 'exists:' . Faculty::class . ',id'],
-            'group'        => ['required', 'exists:' . Group::class . ',name'],
+            'group_id'     => ['required', 'exists:' . Group::class . ',id'],
             'course'       => ['required', 'integer', 'in:1,2,3,4,5'],
             'user_id'      => ['required', 'exists:' . User::class . ',id', 'unique:'.UserProfile::class]
         ];

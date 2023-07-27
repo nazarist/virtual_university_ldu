@@ -7,6 +7,7 @@ use App\Http\Requests\Profile\UserProfileDataRequest;
 use App\Http\Resources\Profile\ProfileResource;
 use App\Models\UserProfile;
 use Illuminate\Http\JsonResponse;
+use App\Action\Profile\CreateUserProfileAction;
 
 
 class ProfileController extends Controller
@@ -16,9 +17,9 @@ class ProfileController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(UserProfileDataRequest $request): JsonResponse
-    {
-        $profile = UserProfile::create($request->validated());
+    public function store(UserProfileDataRequest $request, CreateUserProfileAction $action): JsonResponse
+    {    
+        $profile = $action($request->validated());
 
         return response()->json(new ProfileResource($profile), 201);
     }
