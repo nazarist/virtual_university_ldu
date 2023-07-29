@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Course;
 use App\Action\Course\ParseCoursesIfNotExistAction;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Course\CourseResourse;
-use App\Parser\LduScraper\MainPage;
 
 class CourseController extends Controller
 {

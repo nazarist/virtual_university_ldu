@@ -9,18 +9,18 @@ use Illuminate\Support\Facades\Storage;
 use App\Parser\Contracts\ParserContract;
 
 
-class MainPage extends LduUniversity 
+class HomePage extends LduUniversity 
 {
     protected string $pageLink = 'http://virt.ldubgd.edu.ua/';
 
-    public function __construct(UserProfile $profile)
+    public function __construct()
     {
-        parent::__construct($profile);
+        parent::__construct(auth()->user()->profile);
         
         if (Storage::disk('local')->exists('main.html')){
             $this->pageContent = Storage::disk('local')->get('main.html');
         }else{
-            $this->pageContent = $this->parsePage($this->pageLink);
+            $this->pageContent = $this->parse($this->pageLink);
             Storage::disk('local')->put('main.html', $this->pageContent);
         }
     }
@@ -28,13 +28,13 @@ class MainPage extends LduUniversity
 
     public function parseCourses(): array
     {
-        $courseboxs = $this->document()->find('.coursebox');
+        $courseboxses = $this->document()->find('.coursebox');
 
         $data = [];
-        foreach ($courseboxs as $coursebox){
+        foreach ($courseboxses as $coursebox){
             $data[] = [
                 'name' => $coursebox->first('.coursename')->text(),// get name
-                'link_index' => $this->getLinkIndex($courseboxs),
+                'link_index' => $this->getLinkIndex($coursebox),
                 'user_id' => $this->profile->user_id,
                 'group_id' => $this->profile->group_id
             ];

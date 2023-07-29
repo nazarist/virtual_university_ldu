@@ -59,7 +59,7 @@ abstract class LduUniversity
     }
 
 
-    public function parsePage(string $link): PromiseInterface|Response
+    public function parse(string $link): PromiseInterface|Response
     {
         return Http::withCookies([
                 'MoodleSession' => $this->profile->moodle_session
@@ -85,5 +85,11 @@ abstract class LduUniversity
         parse_str(parse_url($url, PHP_URL_QUERY), $params);
 
         return $params['id'];
+    }
+
+
+    public function getImage(string $link)
+    {
+        return $this->parse($link)->getBody()->getContents();
     }
 }
