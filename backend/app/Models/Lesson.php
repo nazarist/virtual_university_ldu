@@ -4,20 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Lesson extends Model
 {
     use HasFactory;
 
-    public function lessons(): HasMany
-    {
-        return  $this->hasMany(Task::class);
-    }
+    protected $fillable = [
+        'link_index', 'text', 'topic_id', 'type', 'content'
+    ];
 
-    public function group(): BelongsTo
+
+    public function topic(): BelongsTo
     {
-        return  $this->belongsTo(Group::class, 'group_id');
+        return $this->belongsTo(Topic::class, 'topic_id');
     }
 }

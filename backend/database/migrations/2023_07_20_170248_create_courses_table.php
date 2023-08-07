@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('name');
             $table->integer('link_index');
             $table->foreignIdFor(Group::class, 'group_id');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

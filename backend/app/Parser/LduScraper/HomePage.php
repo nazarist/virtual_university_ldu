@@ -13,9 +13,9 @@ class HomePage extends LduUniversity
 {
     protected string $pageLink = 'http://virt.ldubgd.edu.ua/';
 
-    public function __construct()
+    public function __construct($profile = false)
     {
-        parent::__construct(auth()->user()->profile);
+        parent::__construct($profile ?? auth()->user()->profile);
         
         if (Storage::disk('local')->exists('main.html')){
             $this->pageContent = Storage::disk('local')->get('main.html');
@@ -35,12 +35,20 @@ class HomePage extends LduUniversity
             $data[] = [
                 'name' => $coursebox->first('.coursename')->text(),// get name
                 'link_index' => $this->getLinkIndex($coursebox),
-                'user_id' => $this->profile->user_id,
                 'group_id' => $this->profile->group_id
             ];
         }
         
         return $data;
+    }
+
+
+
+    public function parseAndSaveCourses()
+    {
+        $courses = $this->parseCourses();
+        
+        
     }
 
 

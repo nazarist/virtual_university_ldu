@@ -22,11 +22,11 @@ use App\Http\Controllers\Controller;
  *                 property="profile",
  *                 nullable=true,
  *                 type="object",
- *                 @OA\Property(property="ldu_login", type="string", example="n.nazar"),
- *                 @OA\Property(property="ldu_password", type="string", example="2323232"),
- *                 @OA\Property(property="faculty", type="string", example="Ад`юнктура"),
+ *                 @OA\Property(property="ldu_login", type="string", example="n.iliasevych"),
+ *                 @OA\Property(property="ldu_password", type="string", example="45895"),
+ *                 @OA\Property(property="faculty", type="integer", example="Ад`юнктура"),
  *                 @OA\Property(property="group", type="string", example="КН12с"),
- *                 @OA\Property(property="course", type="integer", example=1)
+ *                 @OA\Property(property="course", type="string", example="Навчально-науковий інститут цивільного захисту")
  *             )
  *         )
  *     ),
@@ -37,8 +37,45 @@ use App\Http\Controllers\Controller;
  *             @OA\Property(property="message", type="string", example="Unauthenticated")
  *         )
  *     )
+ * ),
+ *
+ * 
+ * @OA\Get(
+ *     path="/api/user/{user}",
+ *     operationId="getUser",
+ *     tags={"User"},
+ *     summary="Get user information",
+ *     description="Returns user information",
+ *     security={{ "bearerAuth":{} }},
+ *     @OA\Parameter(
+ *         name="user",
+ *         in="path",
+ *         required=true,
+ *         description="ID of the user",
+ *         @OA\Schema(
+ *             type="integer",
+ *             format="int64"
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="User information",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="name", type="string", example="nazar"),
+ *             @OA\Property(property="full_name", type="string", example="Назар Ілясевич"),
+ *             @OA\Property(property="group", type="string", example="КН12с")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="User not found",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="message", type="string", example="User not found")
+ *         )
+ *     ),
  * )
  */
+
 
 class UserSwagger extends Controller
 {

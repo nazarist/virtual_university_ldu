@@ -38,7 +38,6 @@ abstract class LduUniversity
 
         $moodleSession = $response->cookies()->getCookieByName('MoodleSession');
 
-        dump($moodleSession->getValue());
         $this->profile->update([
             'moodle_session' => $moodleSession->getValue(),
             'session_at' => now()
@@ -70,6 +69,12 @@ abstract class LduUniversity
     public function getPage(): string
     {
         return $this->pageContent;
+    }
+
+
+    public function getProfile(): UserProfile
+    {
+        return $this->profile;
     }
 
 

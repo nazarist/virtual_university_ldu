@@ -11,9 +11,6 @@ class ParseCoursesIfNotExistAction
 {
     public function __invoke(): array|Collection
     {
-        $homePage = new HomePage(auth()->user()->profile);
-        $homePage->parseCourses();
-        
         $profile = auth()->user()->profile;
 
         $groupIsNotExists = Course::query()

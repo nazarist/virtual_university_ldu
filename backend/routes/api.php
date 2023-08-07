@@ -20,6 +20,7 @@ Route::prefix('/profile')->group(function (){
 
 Route::prefix('/user')->group(function (){
     Route::get('self', [App\Http\Controllers\User\UserController::class, 'getSelf'])->name('user.self');
+    Route::get('{user}', [App\Http\Controllers\User\UserController::class, 'show'])->name('user.show');
 });
 
 

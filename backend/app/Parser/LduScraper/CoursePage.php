@@ -2,24 +2,28 @@
 
 namespace App\Parser\LduScraper;
 
-use App\Models\UserProfile;
+
 use App\Parser\LduUniversity;
-use DiDom\Document;
+use App\Models\Topic;
+use App\Models\Lesson;
+use App\Models\Course;
 use Illuminate\Support\Facades\Storage;
-use App\Parser\Contracts\ParserContract;
 use thiagoalessio\TesseractOCR\TesseractOCR;
 use DiDom\Element;
+use thiagoalessio\TesseractOCR\UnsuccessfulCommandException;
 
 class CoursePage extends LduUniversity 
 {
     protected string $pageLink;
 
-    public function __construct(int $linkId)
+    protected Course $course;
+
+    public function __construct(Course $course)
     {
         parent::__construct(auth()->user()->profile);
 
-        $this->pageLink = 'http://virt.ldubgd.edu.ua/course/view.php?id='.$linkId;
-
+        $this->pageLink = 'http://virt.ldubgd.edu.ua/course/view.php?id='.$course->link_index;
+        $this->course = $course;
 
         $fileName = explode('?', $this->pageLink)[1] . '.html';
 
@@ -39,13 +43,15 @@ class CoursePage extends LduUniversity
 
 
 
-    public function getLesson()
+    public function parseLessons(): array
     {
         $contents = $this->document()->find('.main');// sections
 
 
         $topic = [];
         foreach ($contents as $content){
+            if(!$content->has('.sectionname > span')) continue; //if has no title   
+
             $title = $content->first('.sectionname > span')->text();// section name
 
             $lessons = [];
@@ -62,13 +68,30 @@ class CoursePage extends LduUniversity
     }
 
 
+    public function parseAndSaveLessons(): void
+    {
+        foreach($this->parseLessons() as $topic){
+            $topicFromDb = Topic::create([
+                'title' => $topic['title'],
+                'course_id' => $this->course->id,
+            ]);
+
+
+            foreach($topic['lessons'] as $lesson){
+                $lesson['topic_id'] = $topicFromDb->id;
+                Lesson::create($lesson);
+            }
+        }
+    }
+
+
     protected function getActivityType(Element $activity): string
     {
         return explode(' ', $activity->attr('class'))[1];
     }
 
 
-    protected function contentAfterLink(Element $activity)
+    protected function contentAfterLink(Element $activity): array
     {   
         $data = $activity->first('.contentafterlink .no-overflow');
 
@@ -153,9 +176,13 @@ class CoursePage extends LduUniversity
                 $disk->put($imgName, $imgData);
             }
 
-            $ocr = new TesseractOCR($disk->path($imgName));
+            try { 
+                $ocr = new TesseractOCR($disk->path($imgName));
 
-            $ocrText = $ocr->lang('ukr')->run();
+                $ocrText = $ocr->lang('ukr')->run();
+            } catch (UnsuccessfulCommandException $e) {
+                $ocrText = 'none';
+            }
             
             return ['text' => $ocrText];
         }
