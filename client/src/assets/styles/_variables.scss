@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Ysabeau+Infant:ital,wght@0,1;0,200;0,300;0,700;1,1;1,200;1,300;1,700&display=swap');
+
+$accent: #ffffff;
+$text-light: #2D2D39;
+$bg-light: #FDFDFD;
+$black: black;
+$white: darken($accent, 18%);
+$hard-dark-accent: darkest($accent, 30%);
+$dark-accent: darkest($accent, 18%);
+
+$bx-accent: 0 4px 4px rgba($accent, .25);
+$bx-16: 0 3px 6px rgba(0, 0, 0, .16);
+
+$defaul-font: 'Ysabeau Infant', sans-serif;
+
+$mobile: 480px;

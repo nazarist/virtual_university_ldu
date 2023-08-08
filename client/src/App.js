@@ -1,23 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import { Bottom } from "./components/Bottom";
+import { Home } from "./components/screens/home/Home";
+import { FiAirplay } from "react-icons/fi";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          РОЗРОБКА БЛЕТ!
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="mobile-version">
+      <Home />
+      <div>Content <FiAirplay /></div>
+      <Bottom />
     </div>
   );
 }
