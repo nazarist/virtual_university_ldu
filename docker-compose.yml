@@ -38,18 +38,18 @@ services:
      depends_on:
         - mysql_db
 
-  # node:
-  #    build:
-  #       context: .
-  #       dockerfile: _docker/node/Dockerfile
-  #    container_name: ${APP_NAME}_node
-  #    volumes:
-  #       - ./client/:/app/
-  #       - /app/node_modules
-  #    ports:
-  #       - 3000:3000
-  #    networks:
-  #       - front
+  node:
+     build:
+        context: .
+        dockerfile: _docker/node/Dockerfile
+     container_name: ${APP_NAME}_node
+     volumes:
+        - ./client/:/app/
+        - /app/node_modules
+     ports:
+        - 3000:3000
+     networks:
+        - front
 
   mysql_db:
      build:

@@ -11,15 +11,11 @@ class ParseLessonsIfNotExistAction
 {
     public function __invoke(Course $course): array|Collection
     {
-        $topicIsNotExists = Topic::query()
-            ->where('course_id', $course->id)
-            ->doesntExist();
-
-        if ($topicIsNotExists) {
+        if ($course->topics()->doesntExist()) {
             $coursePage = new CoursePage($course);
             $coursePage->parseAndSaveLessons();
         }
         
-        return Topic::query()->where('course_id', $course->id)->get(); 
+        return $course->topics;
     }   
 }
